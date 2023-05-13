@@ -25,12 +25,12 @@ jobs:
 
       - name: Copy JSON files
         run: |
-          cp -r \
+          cp \
           pending_messages.json \
           topics.json \
           users.json \
-          app/ \
-          utils/ \
+          -r app/* \
+          -r utils/* \
           secret.env \
           $GITHUB_WORKSPACE
 
