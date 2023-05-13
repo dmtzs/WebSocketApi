@@ -23,16 +23,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Copy JSON files
-        run: |
-          cp \
-          pending_messages.json \
-          topics.json \
-          users.json \
-          -r app/* \
-          -r utils/* \
-          secret.env \
-          $GITHUB_WORKSPACE
+      # - name: Copy JSON files
+      #   run: |
+      #     cp \
+      #     pending_messages.json \
+      #     topics.json \
+      #     users.json \
+      #     -r app/* \
+      #     -r utils/* \
+      #     secret.env \
+      #     $GITHUB_WORKSPACE
 
       # run: cp pending_messages.json topics.json users.json $GITHUB_WORKSPACE
       # run: cp -r api/* $GITHUB_WORKSPACE
