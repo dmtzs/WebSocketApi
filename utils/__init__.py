@@ -40,6 +40,7 @@ def decode_token(token:str) -> dict[str,str]|None:
     :return: The decoded token payload
     """
     try:
+        SECRET_KEY = os.getenv("SECRET_KEY")
         token = jwt.decode(token, SECRET_KEY, algorithms=[os.getenv("ALGORITHM")])
         # decode iat and exp to human readable format in new keys
         token["iat_readable"] = datetime.fromtimestamp(token["iat"]).strftime("%Y-%m-%d %H:%M:%S")
