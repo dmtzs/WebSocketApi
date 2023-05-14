@@ -2,18 +2,9 @@ try:
     import os
     import jwt
     import json
-    from dotenv import load_dotenv
     from datetime import datetime, timedelta
 except ImportError as e_imp:
     print(f"The following import ERROR occurred in {__file__}: {e_imp}")
-
-# Definir la clave secreta para firmar el token
-if os.path.exists("secret.env"):
-    load_dotenv("secret.env")
-    SECRET_KEY = os.getenv("SECRET_KEY")
-else:
-    print("No secret.env file found")
-    raise SystemExit
 
 def encode_token(username:str, password:str, days:int=1, minutes:int=0, **kwargs) -> str|None:
     """
@@ -34,6 +25,7 @@ def encode_token(username:str, password:str, days:int=1, minutes:int=0, **kwargs
         }
         if kwargs:
             payload_core |= kwargs # merge the two dictionaries
+        SECRET_KEY = os.getenv("SECRET_KEY")
         return jwt.encode(payload_core, SECRET_KEY, algorithm=os.getenv("ALGORITHM"))
     except Exception as e:
         print(f"The following ERROR occurred in {__file__}: {e}")
@@ -48,6 +40,7 @@ def decode_token(token:str) -> dict[str,str]|None:
     :return: The decoded token payload
     """
     try:
+        SECRET_KEY = os.getenv("SECRET_KEY")
         token = jwt.decode(token, SECRET_KEY, algorithms=[os.getenv("ALGORITHM")])
         # decode iat and exp to human readable format in new keys
         token["iat_readable"] = datetime.fromtimestamp(token["iat"]).strftime("%Y-%m-%d %H:%M:%S")
